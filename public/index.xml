@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>blog to self-introduce, rat race, get a skin-in-the-game in wording, etc.</title>
+    <link>/</link>
+    <description>Recent content on blog to self-introduce, rat race, get a skin-in-the-game in wording, etc.</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Mon, 18 Jan 2021 00:00:00 +0000</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>sound event detection: what and how</title>
+      <link>/posts/sed1/</link>
+      <pubDate>Mon, 18 Jan 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/sed1/</guid>
+      <description>Sound event detection: what and how Layout:
+ Problem definition Deep learning Methods Challenges A real example References  Problem definition Sound event detection (SED): Task to identify the type of sound event. May also identify start/end time in the long audio stream.
+Like most problems, SED relies on labeling, or the start/end time locations. A concept called weak labeling exists in SED world, which refers to labels telling only types of sound events.</description>
+    </item>
+    
+    <item>
+      <title>creative coding: how&#39;s it made?</title>
+      <link>/posts/cc1/</link>
+      <pubDate>Wed, 13 Jan 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/cc1/</guid>
+      <description>Creative coding: 1st attempt layout:
+ creative coding and javascript generative learning  Creative coding and js Generative learning So can I do this?
+Looking into my toolbox, the only thing that somewhat links to art and creativity is deep learning.
+Question: What can deep learning do in creative coding/art?
+This is obviously not a new question at all. We have all those generative models like conditional gans that turn pictures into art works.</description>
+    </item>
+    
+    <item>
+      <title>stock: rdfn vs z</title>
+      <link>/posts/stock1/</link>
+      <pubDate>Tue, 12 Jan 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/stock1/</guid>
+      <description>A summary of a Zillow and Redfin comparison SA article by Dan Owens. Both positive quarterly earnings in the third quarter 2020. Not profitable yearly though.
+Housing demand surge by COVID can be a reason.
+How to be profitable remains questionable.
+Both offers two choices: sell directly to third parity or sell to company.
+Direct buying (by the company for resale) services are called Instant Offer and RedfinNow
+Claimed impZortant metric on 10K: online visitors</description>
+    </item>
+    
+    <item>
+      <title>workshop: play text-based games with rl</title>
+      <link>/posts/nlp_rl/</link>
+      <pubDate>Sat, 09 Jan 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/nlp_rl/</guid>
+      <description>Play interactive fiction games with reinforcement learning *A report written for school, thus the (annoying) verboseness
+*Chose the topic thanks to the Wordplay workshop at NeurIPS 2020 (did not attend, just reading papers)
+Contents
+ Natural language tool definition Data and environment specifications Problem and algorithms Experiments and comparisons References  1 Natural language tool definition
+The natural language tool this report evaluates is a reinforcement learning (RL) agent that plays a type of game called Interactive Fiction (IF).</description>
+    </item>
+    
+    <item>
+      <title>Lex podcast jot: meaning of life and human being 2-dimensional</title>
+      <link>/posts/lex1/</link>
+      <pubDate>Tue, 15 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/lex1/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>VAE: reasoning process</title>
+      <link>/posts/vae/</link>
+      <pubDate>Wed, 18 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/vae/</guid>
+      <description>No math, just bullet points! to stopped being constantly bothered by theories behind VAE.
+Start with GMM: each z corresponds to a cluster.
+Optimizing log probability of GMM: won’t work because you have to sample the unique z that correspond to an x. Otherwise the other sampled p(x|z) are virtually zero (so no gradients).
+Distributed representation: an important catch: e.g. binary features result in 2^n, rather than n, clusters.
+Thus, the chance of sampling a useful z is 1/(2^n).</description>
+    </item>
+    
+  </channel>
+</rss>

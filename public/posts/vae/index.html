@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <title>blog to self-introduce, rat race, get a skin-in-the-game in wording, etc.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="description" content="VAE review that is quick" />
+
+    <meta property="og:title" content="VAE: reasoning process" />
+    <meta property="og:description" content="VAE review that is quick" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="/posts/vae/" />
+    <meta itemprop="name" content="VAE: reasoning process">
+    <meta itemprop="description" content="VAE review that is quick">
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="VAE: reasoning process"/>
+    <meta name="twitter:description" content="VAE review that is quick"/>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+
+    
+    <link rel="stylesheet" href="/scss/style.min.9bf347619a1a9b4fa201e1cce19613a1d01ae8346db68078d056739d56c103b9.css" >
+</head>
+<body>
+    <header>
+    <div class="header poster-header-frame">
+        
+        
+        
+</header>
+
+
+
+    <div id="content">
+  <article class="post">
+    <button class="floating-button">
+    <a class="floating-button__link" href="">
+        <span>back</span>
+    </a>
+</button>
+
+    
+    
+      <div class="post-content"><p>No math, just bullet points! to stopped being constantly bothered by theories behind VAE.</p>
+<p>Start with GMM: each z corresponds to a cluster.</p>
+<p>Optimizing log probability of GMM: won’t work because you have to sample the unique z that correspond to an x. Otherwise the other sampled p(x|z) are virtually zero (so no gradients).</p>
+<p>Distributed representation: an important catch: e.g. binary features result in 2^n, rather than n, clusters.</p>
+<p>Thus, the chance of sampling a useful z is 1/(2^n). Almost zero at high dimension.</p>
+<p>What if z is continuous sampled from Gaussan:</p>
+<p>Or maybe p(z), or pZ(z) as confusingly called in a lot of places, is non-gaussian and hard to sample. WE DON”T KNOW!</p>
+<p>How to solve? Important sampling!!</p>
+<p>Important sampling: remember? just add the q(z)/q(z) term! Now can sample from q.</p>
+<p>We have to choose a good q. We want it to be dependent on x, not sampling same for all values of x.</p>
+<p>But again, no exact solution available for q. Optimize KL( q || p )!!</p>
+<p>What do we get? Some optimization objective with logqz, logpz, and logp(x|z)</p>
+<p>Assume: logqz and logpz are gaussian. logp(x|z) a neural network</p>
+<p>A reminder: we are trying to minimize KL to get q! And this is for q to be able to sample useful z</p>
+<p>Amortized inference: You can actually ignore this, not super important. So far the formulation was targeting individual x, meaning that I should have written x as xi. Amortized means to modify the KL objective by adding a summation in the front to optimize many x simultaneously.</p>
+<p>Amortized continue: also use another neural network to calculate mean and variance of q. Amortized is faster (doesn’’t predict from scratch for each new xi) but not as precise.</p>
+<p>Why not as precise: two appx made: 1. q as gaussian. 2. For all x, q uses the same parametrization (same nn for mean and var)</p>
+<p>That is pretty much it. Still there are some (quite mathy) details on training methods, so that all the above become officially VAE</p>
+<p>Specifically, there are two methods to train: 1. Likelihood ratio gradient and 2. Pathwise Derivative</p>
+<p>How exactly: 1. calculate z, and optimize directly (if its far from x, then not useful. Need many z to form a good estimate)</p>
+<ol>
+<li>calculate z by estimating mean and variance (called reparameterization trick). Works only for continuous z.</li>
+</ol>
+<p>The loss function: similar xs should give us similar zs</p>
+</div>
+    
+    <button class="floating-button">
+    <a class="floating-button__link" href="">
+        <span>back</span>
+    </a>
+</button>
+
+  </article>
+  
+    </div>
+    
+    
+      
+<script src="/js/script.js"></script>
+
+    
+  </body>
+</html>

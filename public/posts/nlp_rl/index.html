@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <title>blog to self-introduce, rat race, get a skin-in-the-game in wording, etc.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="description" content="based on Wordplay at Neurips2020" />
+
+    <meta property="og:title" content="workshop: play text-based games with rl" />
+    <meta property="og:description" content="based on Wordplay at Neurips2020" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="/posts/nlp_rl/" />
+    <meta itemprop="name" content="workshop: play text-based games with rl">
+    <meta itemprop="description" content="based on Wordplay at Neurips2020">
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="workshop: play text-based games with rl"/>
+    <meta name="twitter:description" content="based on Wordplay at Neurips2020"/>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+
+    
+    <link rel="stylesheet" href="/scss/style.min.9bf347619a1a9b4fa201e1cce19613a1d01ae8346db68078d056739d56c103b9.css" >
+</head>
+<body>
+    <header>
+    <div class="header poster-header-frame">
+        
+        
+        
+</header>
+
+
+
+    <div id="content">
+  <article class="post">
+    <button class="floating-button">
+    <a class="floating-button__link" href="">
+        <span>back</span>
+    </a>
+</button>
+
+    
+    
+      <div class="post-content"><h2 id="play-interactive-fiction-games-with-reinforcement-learning">Play interactive fiction games with reinforcement learning</h2>
+<p>*A report written for school, thus the (annoying) verboseness</p>
+<p>*Chose the topic thanks to the <a href="https://wordplay-workshop.github.io/modern/">Wordplay workshop</a> at NeurIPS 2020 (did not attend, just reading papers)</p>
+<p><strong>Contents</strong></p>
+<ol>
+<li>Natural language tool definition</li>
+<li>Data and environment specifications</li>
+<li>Problem and algorithms</li>
+<li>Experiments and comparisons</li>
+<li>References</li>
+</ol>
+<p><strong>1 Natural language tool definition</strong></p>
+<p>The natural language tool this report evaluates is a reinforcement learning (RL) agent that plays a type of game called Interactive Fiction (IF). IF refers to text-based game environments where player observe and interact with environments purely through texts. This can be best illustrated by a screenshot of a game called Zork in figure 1. Also, here is a general tutorial for IF games where one will learn some basics commands: <a href="http://adamcadre.ac/if/tutorial.html">http://adamcadre.ac/if/tutorial.html</a>.</p>
+<p>Playing IF games in English, the tool discussed in this report uses machine learning models that specifically processes English language. In order to receive any reward (score) in the game, it is important that models are able to perform multiple English NLP tasks including semantics interpretation, text generation, and, most importantly, reasoning and decision making. Take the example in figure 1, where the player is given a contextual description of the surrounding environment (e.g. the presences of a white house, a door, and a mailbox) and the player should figure out actions to take (which means doing text generation) based solely on the description (which require player to understand the environment). Furthermore, the player will have to in some ways maintain a memory of the past. For example, the player may need to memorize visited path to get our of a maze. More details about IF games will be included in later sections.</p>
+<p>The technical structure of the tool can be thought of the text version of an RL task, which can be based on, for example, RL structures such as deep Q networks and actor-critics. In order to handle text input and output, encoder-decoder style architectures based on recurrent neural networks are commonly used, along with word-embedding transformations for efficient input encodings.</p>
+<p>The goal of the tool is simple: the RL agent plays IF games repetitively and hopeful will learn the decision making skill to receive high scores in the games (the scoring system will be described in the following section).</p>
+<img src="/nlp_rl_1.png" width="70%" height="auto"/>
+<p>Figure 1: Example gameplay of Zork 1. After &quot;DO SOMETHING&quot; are actions typed by players</p>
+<p><strong>2 Data and environment specifications</strong></p>
+<p>We need an API so that machine learning code can interact with IF games conveniently. The tool used in the coming models is Jericho [1], an open-source IF game API that allows players to programmatically take actions, observe environments, get scores, and so on using Python. Jericho is written in Python and runs on Linux only. Example gameplay in Figure 1 is implemented using Jericho, where it runs a game called Zork 1. Including Zork 1, there are about 40 different IF games supported by Jericho and the list is expanding. Although this is not a topic that will be expanded here, it is interesting to note that these games varies in difficulties to RL agents due to certain factors such as whether there is randomness in the game and whether there are dark areas where player have to look for lights to be able to observe.</p>
+<p>An interesting aspect of IF games is that there are no options of actions for players to choose from. Player have to type in actions that make sense, but they are allowed to enter whatever they like. However, only a handful of actions will be accepted, because actions have to be both making sense and in the internal parser dictionary. This design, as we will see later, poses a major difficulty that complicates RL algorithms.</p>
+<p>When agent takes certain actions that get them closer to the ultimate goal, they receive scores or, in RL language, rewards. Figure 2 shows an example of receiving scores. The player climbed up a tree and took the eggs which should be an important item in the game.</p>
+<p><img src="/nlp_rl_2.png" alt=""></p>
+<p>Figure 2: Receiving rewards (scores)</p>
+<p><strong>3 Problem and algorithms</strong></p>
+<p>As declared from the very beginning, the whole problem of solving IF games, in this report, is framed as a reinforcement learning problem. This report will assume reader knowledge in RL and not dive deep into theories behind it; instead this report will focus on how language models are adapted in common RL settings.</p>
+<p>IF games pose a major challenge that complicates RL models [1, 2]. First, unlike console games where input are a small number of buttons, input actions space for IF games are natural language which are huge. Simple calculation shows that generating a four-word sentence from a vocabulary of size 700 translates to exploring 240 billion possible actions. The number of commands parceable by the games, however, are a mere 100 million, from which (approximately) a hundred valid actions will actually cause state transition.</p>
+<p>In order to simplify action generations, Jericho introduced the concept of templates and objects. For example, a template can be &amp;lt;pick up OBJ&amp;gt;, where OBJ is a placeholder. Objects can be in-game items such as &quot;key&quot; and &quot;eggs&quot;. Jericho provides a list of templates, which mostly contains up to two placeholders. Therefore, instead of asking agents to do the intractable task of generating natural language out of nothing, one can let agent do this &quot;search for placeholders&quot; task which largely reduces action space.</p>
+<p><strong>DRRN</strong> : The model used by the original Jericho paper is a deep Q networks (DQN) based model. DQN uses a deep neural networks to estimate Q value from observation o and action a, denoted as Q(o, a); DRRN (Deep Reinforcement Relevance Network), the name of the model, does just that, but its inputs (both observations and actions) are natural language. To turn language into numerical values, the model pretrains a 8K words tokenization model using [3]. The dataset used for pretraining is gathered from a variety of IF games. Lacking knowledge in tokenization techniques, I have several doubts regarding this design: whether the dataset is appropriate for pretraining (IF game subjects differ significantly, including both medieval and modern-style environments), what is the reason for this specific tokenization algorithm, and why is word2vec such as Glove not used instead. However, the paper does not include relavent explanation.</p>
+<p>Output from tokenization goes into DRRN. Figure 3 shows the architecture of DRRN's Q function. The model separately processes three different observations, <em>Onar</em>, <em>Oinv</em>, and <em>Odesc</em> (figure 4 illustrates their differences) using recurrent neural networks, in this case gated recurrent units (GRU). Then, the representations are concatenated with a specific valid action a to calculate the Q value Q(o, a). When choosing an action with the highest Q, the agent needs Q(o, A), which is many Q values corresponding to each valid action a. To achieve this, it first iteratively calculates all valid actions (which is a functionality by Jericho, made possible by templates pre-defined), and then calculate Q(o, A) by passing through the DRRN model multiple times. The algorithm updates in the conventional DQN way: maintain a replay buffer and sample from it to minimize temporal-difference error.</p>
+<p>The major trick of this model is the beforehand extraction of valid actions, which significantly reduces action space which enables tractable calculation of maximum of Q values. This, of course, is very dependent on the ability and efficiency to &quot;cheat&quot; and test valid state, which is luckily supported by Jericho.</p>
+<p>To provide a more thorough picture of RL for IF games, next, the report will at a high level describe briefly two models with improved performance relative to DRRN.</p>
+<p><img src="/nlp_rl_3.png" alt=""></p>
+<p>Figure 3: The way the original Jericho paper processes environment and estimate Q values.</p>
+<p><img src="/nlp_rl_4.png" alt=""></p>
+<p>Figure 4: An example illustrating how observations are defined. <em>Onar</em> is the default narrative environment. <em>Oinv</em> is the list of inventory from the command &quot;inventory&quot;. <em>Odesc</em> is from the command &quot;look&quot;. In this case, &quot;You are awake&hellip;&quot; is <em>Onar</em>, the texts following &quot;look&quot; and &quot;inventory&quot; commands are <em>Odesc</em>, and <em>Oinv</em>. Note that &quot;look&quot; and &quot;inventory&quot; are special commands that will not change game states.</p>
+<p><strong>Memory-based model</strong> : A major problem of DRRN is that it determines Q value solely based on the current observation and actions. For IF games, however, noting down the past important event can be helpful even for human players—that is, RL agents may need mechanisms for memory. A new model proposes to consider historical observations when making decision for the current observations [2]. This method will be called MPRC (multi-paragraph reading comprehension) in this report following the term in the paper.</p>
+<p>The first innovation of this method is illustrated in figure 5(a), where not only the current observation but also t observations from the past are added as input. A trick here is to choose only the past observations sharing at least one same object with the current observation. An object is a noun string representing an in-game item such as &quot;key&quot;, &quot;tree&quot;, etc. The specific way of parsing objects is not described in the paper. The input encoding scheme here, unlike that in DRRN, word-level tokenization and word2vec (100-dimensional GloVe), which makes sense because the model cares about objects in language sentences, which are word-level.</p>
+<p>Another innovation is shown in figure 5(b). This part is, in a broad sense, doing the same thing as DRRN as in figure 3, which is to predict Q values. However, the network inside is largely different in that it uses a transformer-style architecture, which uses a query-key-value framework to extract knowledge from sequence data. In this case, the model defines templates as queries and use them to match to objects in observations, which results in action value (Q value) prediction based on similarity (e.g. cosine similarity).</p>
+<img src="/nlp_rl_5.png" width="70%" height="auto"/>
+<p>Figure 5: High-level architecture of MPRC. RC-model in (b) uses transformers internally, which is not shown for simplicity.</p>
+<p>MPRC gives more freedom to action exploration rather than giving agents the exact valid action space. Whereas this might increase complexity, it can perhaps encourage better semantics learning, because of the use of memory, transformer, and GloVe, which is a general word embedding representation that may help capture semantics (e.g. it tells the model &quot;pick up&quot; should more likely be followed by &quot;key&quot; than &quot;tree&quot;).</p>
+<p><strong>Graph-based model</strong> : There is another model, called KG-A2C, that aims at improving DRRN by incorporating a map of the in-game world. Specifically it proposes to dynamically build a knowledge graph to improve agent's reasoning. Figure 6 is an example of the knowledge graph, built using Stanford Open Information Extraction tool, being dynamically updated at each timestep. Similar to DRRN, KG-A2C uses neural networks to estimate Q value (not exactly this name for the use of Advantage Actor Critic not DQN, but similar idea). The way the graph is incorporated in the network is by using a graph embedding algorithm called Graph Attention Network (GAT). Basically, this adds another input in addition to the text observation and action. Due to the complexity of the paper, the length of this report, and also the rather small improvement this acturally made on DRRN, description of this model stops here.</p>
+<img src="/nlp_rl_6.png" width="50%" height="auto"/>
+<p>Figure 6: An example knowledge graph used in KG-A2C.</p>
+<p>The graph is represented by a list of [node, edge, node]</p>
+<p><strong>4 Experiments and comparisons</strong></p>
+<p>We first want to confirm the algorithms are actually able to learn. Figure 7 compares the training result of DRRN, the original algorithm, with two other gameplay policies, RAND and NAIL. RAND is simply gameplay following random actions. NAIL is a non-ML method that explores IF games based on hard-coded rules. We observe that DRRN can generally outperform random walking and non-ML method, though it is still far from beating any games. Note that for some games, the agent could not score at all due to various factors including complex interactions and reasoning involved and sparse rewards.</p>
+<p>Figure 8 combines the scores received by all three of the models introduced. We observe that MPRC has an overall improvement on the majority of the games, possibly indicating an improved learning of IF games that is agnostic to game contents and styles. MPRC outperforming DRRN should be expected, because its use of a general word embedding dataset and its agent has access to useful histories. KG-A2C, on the other hand, did not show significant improvement compared to DRRN, despite the interesting idea of incorporating a graph neural network. After all, learning to understand a graph is a relatively new research question and perhaps there are ways to improve extractions of useful knowledge, such as logics, semantics, and locations, from it.</p>
+<p>In conclusion, we are able to tell that RL agents can actually learn strategies to gain scores in pure text-based IF games. However, there remain many problems to solve. The score, though improving, is far from being perfect. To make a breakthrough in scores, maybe it's necessary to look into what RL agents are actually learning. Are they simply finding symbolic patterns? Are they actually learning semantics? Are they able to reason? After all, exploring the multi-modality real world, rather than playing IF games, should be the ultimate goal of intelligent agents, so we want them to learn in the way we intend.</p>
+<img src="/nlp_rl_7.png" width="50%" height="auto"/>
+<p>Figure 7: Scores of different policies on a list of games. Bold ones indicate the best score. MaxScore shows the maximum possible scores of each game.</p>
+<img src="/nlp_rl_8.png" width="50%" height="auto"/>
+<p>Figure 8: Scores of all models introduced. Walkthrough column means maximum score.</p>
+<p><strong>5 References</strong></p>
+<p>[1] M. Hausknecht, P. Ammanabrolu, M.-A. Côté, and X. Yuan. Interactive fiction games: A colossal adventure. <em>arXiv preprint arXiv:1909.05398</em>, 2019.</p>
+<p>[2] Guo, X., Yu, M., Gao, Y., Gan, C., Campbell, M., &amp; Chang, S. (2020). Interactive Fiction Game Playing as Multi-Paragraph Reading Comprehension with Reinforcement Learning. In <em>EMNLP</em>, 2020.</p>
+<p>[3] T. Kudo and J. Richardson. Sentencepiece: A simple and language independent subword tokenizer and detokenizer for neural text processing. CoRR, abs/1808.06226, 2018. URL http://arxiv. org/abs/1808.06226.</p>
+<p>[4] P. Ammanabrolu and M. Hausknecht. Graph constrained reinforcement learning for natural language action spaces. <em>arXiv</em>, pages arXiv–2001, 2020.</p>
+<p>[5] Petar Velickovi ˇ c, Guillem Cucurull, Arantxa Casanova, Adriana Romero, Pietro Li ´ o, and Yoshua ` Bengio. Graph Attention Networks. <em>International Conference on Learning Representations (ICLR)</em>, 2018.</p>
+</div>
+    
+    <button class="floating-button">
+    <a class="floating-button__link" href="">
+        <span>back</span>
+    </a>
+</button>
+
+  </article>
+  
+    </div>
+    
+    
+      
+<script src="/js/script.js"></script>
+
+    
+  </body>
+</html>

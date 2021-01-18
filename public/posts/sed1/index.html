@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <title>blog to self-introduce, rat race, get a skin-in-the-game in wording, etc.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="description" content="(still writing...Please don&#39;t! I can&#39;t skip morning workout/reading/youtubing)
+quick review of what and (deep learning-based) how of SED with Kaggle example" />
+
+    <meta property="og:title" content="sound event detection: what and how" />
+    <meta property="og:description" content="(still writing...Please don&#39;t! I can&#39;t skip morning workout/reading/youtubing)
+quick review of what and (deep learning-based) how of SED with Kaggle example" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="/posts/sed1/" />
+    <meta itemprop="name" content="sound event detection: what and how">
+    <meta itemprop="description" content="(still writing...Please don&#39;t! I can&#39;t skip morning workout/reading/youtubing)
+quick review of what and (deep learning-based) how of SED with Kaggle example">
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="sound event detection: what and how"/>
+    <meta name="twitter:description" content="(still writing...Please don&#39;t! I can&#39;t skip morning workout/reading/youtubing)
+quick review of what and (deep learning-based) how of SED with Kaggle example"/>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+
+    
+    <link rel="stylesheet" href="/scss/style.min.9bf347619a1a9b4fa201e1cce19613a1d01ae8346db68078d056739d56c103b9.css" >
+</head>
+<body>
+    <header>
+    <div class="header poster-header-frame">
+        
+        
+        
+</header>
+
+
+
+    <div id="content">
+  <article class="post">
+    <button class="floating-button">
+    <a class="floating-button__link" href="">
+        <span>back</span>
+    </a>
+</button>
+
+    
+    
+      <div class="post-content"><h1 id="sound-event-detection-what-and-how">Sound event detection: what and how</h1>
+<p>Layout:</p>
+<ol>
+<li>Problem definition</li>
+<li>Deep learning Methods</li>
+<li>Challenges</li>
+<li>A real example</li>
+<li>References</li>
+</ol>
+<h2 id="problem-definition">Problem definition</h2>
+<p>Sound event detection (SED): Task to identify the type of sound event. May also <strong>identify start/end time</strong> in the long audio stream.</p>
+<p>Like most problems, SED relies on labeling, or the start/end time locations. A concept called <strong>weak labeling</strong> exists in SED world, which refers to labels telling only types of sound events. A famous such dataset (named <strong>Audio Set</strong>) is by Google.</p>
+<p>There is also a thing called 2017 DCASE challenge, which asked people to solve weakly labeled SED tasks.</p>
+<p>How to predict? Easy:</p>
+<ul>
+<li>For each audio stream, predict binary label for each sound event at <strong>local substream</strong></li>
+<li>Combine results using a <strong>pooling function</strong></li>
+</ul>
+<p>[Hello] talks about some pooling methods: Max, Average, Linear, Exp, Attention.</p>
+<p>You can probably guess what Max and Average pooling mean. The latter three are less obvious, but just some function to map y to [0,1].</p>
+<p>Question a: Wait. They used attention. The paper also listed gradients for poolings. So they train this end-to-end, instead of for each small segment? Why?</p>
+</div>
+    
+    <button class="floating-button">
+    <a class="floating-button__link" href="">
+        <span>back</span>
+    </a>
+</button>
+
+  </article>
+  
+    </div>
+    
+    
+      
+<script src="/js/script.js"></script>
+
+    
+  </body>
+</html>
