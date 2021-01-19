@@ -8,7 +8,7 @@
   </url>
   
   <url>
-    <loc>/tags/ml/</loc>
+    <loc>/tags/ai/</loc>
     <lastmod>2021-01-18T00:00:00+00:00</lastmod>
   </url>
   
@@ -53,13 +53,17 @@
   </url>
   
   <url>
-    <loc>/tags/podcast/</loc>
+    <loc>/tags/living/</loc>
     <lastmod>2020-12-15T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>/posts/vae/</loc>
     <lastmod>2020-11-18T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/contact/</loc>
   </url>
   
   <url>

@@ -4,27 +4,27 @@
     <title>blog to self-introduce, rat race, get a skin-in-the-game in wording, etc.</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <meta name="description" content="(still writing...Please don&#39;t! I can&#39;t skip morning workout/reading/youtubing)
+    <meta name="description" content="(still writing...)
 quick review of what and (deep learning-based) how of SED with Kaggle example" />
 
     <meta property="og:title" content="sound event detection: what and how" />
-    <meta property="og:description" content="(still writing...Please don&#39;t! I can&#39;t skip morning workout/reading/youtubing)
+    <meta property="og:description" content="(still writing...)
 quick review of what and (deep learning-based) how of SED with Kaggle example" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="/posts/sed1/" />
     <meta itemprop="name" content="sound event detection: what and how">
-    <meta itemprop="description" content="(still writing...Please don&#39;t! I can&#39;t skip morning workout/reading/youtubing)
+    <meta itemprop="description" content="(still writing...)
 quick review of what and (deep learning-based) how of SED with Kaggle example">
     <meta name="twitter:card" content="summary"/>
     <meta name="twitter:title" content="sound event detection: what and how"/>
-    <meta name="twitter:description" content="(still writing...Please don&#39;t! I can&#39;t skip morning workout/reading/youtubing)
+    <meta name="twitter:description" content="(still writing...)
 quick review of what and (deep learning-based) how of SED with Kaggle example"/>
 
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
 
     
-    <link rel="stylesheet" href="/scss/style.min.9bf347619a1a9b4fa201e1cce19613a1d01ae8346db68078d056739d56c103b9.css" >
+    <link rel="stylesheet" href="/scss/style.min.c5a5f5170e7970fa8ea82e47dbfd2eb11a2bf0250c059c3a6147bf3e8e288cd9.css" >
 </head>
 <body>
     <header>
@@ -38,14 +38,14 @@ quick review of what and (deep learning-based) how of SED with Kaggle example"/>
 
     <div id="content">
   <article class="post">
-    <button class="floating-button">
+    
+    
+      <button class="floating-button">
     <a class="floating-button__link" href="">
         <span>back</span>
     </a>
 </button>
 
-    
-    
       <div class="post-content"><h1 id="sound-event-detection-what-and-how">Sound event detection: what and how</h1>
 <p>Layout:</p>
 <ol>
@@ -58,15 +58,25 @@ quick review of what and (deep learning-based) how of SED with Kaggle example"/>
 <h2 id="problem-definition">Problem definition</h2>
 <p>Sound event detection (SED): Task to identify the type of sound event. May also <strong>identify start/end time</strong> in the long audio stream.</p>
 <p>Like most problems, SED relies on labeling, or the start/end time locations. A concept called <strong>weak labeling</strong> exists in SED world, which refers to labels telling only types of sound events. A famous such dataset (named <strong>Audio Set</strong>) is by Google.</p>
-<p>There is also a thing called 2017 DCASE challenge, which asked people to solve weakly labeled SED tasks.</p>
+<p>There is also a thing called 2017 DCASE challenge, which is a dataset and asks people to solve weakly labeled SED tasks.</p>
 <p>How to predict? Easy:</p>
 <ul>
 <li>For each audio stream, predict binary label for each sound event at <strong>local substream</strong></li>
 <li>Combine results using a <strong>pooling function</strong></li>
+<li>(This may be referred to as multiple instance learning)</li>
 </ul>
-<p>[Hello] talks about some pooling methods: Max, Average, Linear, Exp, Attention.</p>
+<p>[1] talks about some pooling methods: Max, Average, Linear, Exp, Attention.</p>
 <p>You can probably guess what Max and Average pooling mean. The latter three are less obvious, but just some function to map y to [0,1].</p>
-<p>Question a: Wait. They used attention. The paper also listed gradients for poolings. So they train this end-to-end, instead of for each small segment? Why?</p>
+<p><em>A term—standard multiple instance (SMI)</em>: an assumption that if one segment (or instance) is positive, the entire audio stream is positive. Note that this is not guaranteed for options other than max pooling.</p>
+<p>Question a: Wait. They use attention. The paper also anaylizes gradients for poolings. So pooling is part of training?</p>
+<p>Answer a: Yes. This is (as I interpret) due to the fact that the problem is weakly supervised (so you only know the aggregated labels). In the <strong>supervised</strong> Kaggle example discussed later, however, the problem gives specific timeframes at which sound events occur/end, which may require slightly different approaches.</p>
+<p>Then, something about audio preprocessing conventions:</p>
+<ul>
+<li>Filterbank features with input as 400 frames and 64 frequency bins</li>
+</ul>
+<p>References:</p>
+<p>[1] A COMPARISON OF FIVE MULTIPLE INSTANCE LEARNING POOLING FUNCTIONS FOR SOUND EVENT DETECTION WITH WEAK LABELING - Yun Wang, Juncheng Li, and Florian Metze</p>
+<p><a href="https://haythamfayek.com/2016/04/21/speech-processing-for-machine-learning.html">https://haythamfayek.com/2016/04/21/speech-processing-for-machine-learning.html</a></p>
 </div>
     
     <button class="floating-button">
@@ -80,9 +90,9 @@ quick review of what and (deep learning-based) how of SED with Kaggle example"/>
     </div>
     
     
-      
+        
 <script src="/js/script.js"></script>
 
-    
+      
   </body>
 </html>

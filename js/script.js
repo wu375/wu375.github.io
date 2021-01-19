@@ -14,9 +14,9 @@ if(navigationButton) {
     window.requestAnimationFrame(() => {
       headerNavMobile.style.opacity = "1";
       headerNavListItems.forEach((item, i) => {
-        setTimeout(() => {
+        //setTimeout(() => {
           item.style.opacity = 1;
-        }, 90 * i);
+        //}, 90 * i);
       });
     });
     function closeHeaderNavHandler() {
@@ -40,9 +40,9 @@ if (burgerButton) {
     window.requestAnimationFrame(() => {
       headerNavMobile.style.opacity = "1";
       headerNavListItems.forEach((item, i) => {
-        setTimeout(() => {
+        //setTimeout(() => {
           item.style.opacity = 1;
-        }, 90 * i);
+        //}, 90 * i);
       });
     });
     function closeHeaderNavHandler() {

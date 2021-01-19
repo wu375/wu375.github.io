@@ -25,10 +25,7 @@ Like most problems, SED relies on labeling, or the start/end time locations. A c
       
       <guid>/posts/cc1/</guid>
       <description>Creative coding: 1st attempt layout:
- creative coding and javascript generative learning  Creative coding and js Generative learning So can I do this?
-Looking into my toolbox, the only thing that somewhat links to art and creativity is deep learning.
-Question: What can deep learning do in creative coding/art?
-This is obviously not a new question at all. We have all those generative models like conditional gans that turn pictures into art works.</description>
+ creative coding and javascript generative learning  Creative coding and js Generative learning Generative arts, creative coding, generative coding.. These all fo some reason hint on the use of machine learning/deep learning. Actually they share one similarity. They are both, to some extent, abstract/mysterious/unexplainable. Arts are like neural networks, functions where inputs are images and outputs are, say, levels of satisfaction of viewers. It&amp;rsquo;s hard to tell what triggers different outputs, which is a digression to the ancient brain vs nn problem</description>
     </item>
     
     <item>
@@ -78,6 +75,15 @@ Start with GMM: each z corresponds to a cluster.
 Optimizing log probability of GMM: won’t work because you have to sample the unique z that correspond to an x. Otherwise the other sampled p(x|z) are virtually zero (so no gradients).
 Distributed representation: an important catch: e.g. binary features result in 2^n, rather than n, clusters.
 Thus, the chance of sampling a useful z is 1/(2^n).</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>/contact/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/contact/</guid>
+      <description></description>
     </item>
     
   </channel>
