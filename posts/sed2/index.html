@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <title>blog to self-introduce</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="description" content="Kaggle rainforest comp with cnn-based solutions" />
+
+    <meta property="og:title" content="sound event detection #2: kaggle is real" />
+    <meta property="og:description" content="Kaggle rainforest comp with cnn-based solutions" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="/posts/sed2/" />
+    <meta itemprop="name" content="sound event detection #2: kaggle is real">
+    <meta itemprop="description" content="Kaggle rainforest comp with cnn-based solutions">
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="sound event detection #2: kaggle is real"/>
+    <meta name="twitter:description" content="Kaggle rainforest comp with cnn-based solutions"/>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+
+    
+    <link rel="stylesheet" href="/scss/style.min.436642b633ad0a0dc4a7a99ade60a2b76a56102682aeadc369780247dd463588.css" >
+</head>
+<body>
+    <header>
+    <div class="header poster-header-frame">
+        
+        
+        
+</header>
+
+
+
+    <div id="content">
+  <article class="post">
+    
+    
+      <button class="floating-button">
+    <a class="floating-button__link" href="">
+        <span>back</span>
+    </a>
+</button>
+
+      <div class="post-content"><h1 id="sound-event-detection-2-kaggle-is-real">Sound event detection #2: Kaggle is REAL</h1>
+<p>It&rsquo;s funny seeing myself complaining about how long (an afternoon) it took to research SED before entering the competition. Because in the past 10 days, I spent 70% (to say the least) of all sitting time on the competition, reading, familiarizing, coding, training, inferring, failing. It&rsquo;s addictive and people here are competitive and SERIOUS about the competition. And yet I still could not match the public baseline with 20 days to go (the public score now is 0.87 and I&rsquo;m unfortunately at 0.81). Here are some methods that I tried; some worked some didn&rsquo;t, but I think they are all justifiable attempts and should be useful in other places.</p>
+<p>Layout:</p>
+<ol>
+<li>Task recap</li>
+<li>What&rsquo;s difficult?</li>
+<li>What&rsquo;s the solution?</li>
+</ol>
+<h2 id="1--task-recap">1  Task recap?</h2>
+<p>So what is the problem?</p>
+<p>Input: ~60s audio clips of rainforest environment sounds</p>
+<p>Output: Multi-label probabilities of birds appearing in the clips</p>
+<p>Training data: Time range of birds' appearences in each sound clips and type of that bird (having time ranges means having strong supervision as usually defined in SED research). Besides true positive data (that bird is certainly there), some false positive data (that bird is certainly not there) is also given.</p>
+<p>Note that we only need to output labels, not time range.</p>
+<h2 id="2--whats-so-difficult">2  What&rsquo;s so difficult?</h2>
+<p>The biggest difficulty perhaps is pressure to match high scores by other seasoned Kagglers, meaning that perfection is needed. I don&rsquo;t think 0.8 is a bad score, but when you have someone scoring 0.97, you are relatively bad.</p>
+<p>Some technical difficulties are as follows:</p>
+<ol>
+<li>Test and train audio domain shift</li>
+<li>Real-life data which has imperfect labels</li>
+<li>Computational cost caused problems: difficult validation, super LONG inference, etc</li>
+</ol>
+<p>1 The biggest frustration is when it works at training but fails miserably at testing. Although it&rsquo;s said that this is not so bad in this competition, I am still experiencing 0.05 of difference between validation and test results. There can be a plenty of reasons. The training and test data might had been recorded in totally different environment, by different devices, and post-processed in different ways. The test audio spectrograms, for example, are slightly cleaner than those of training data.</p>
+<p>2 The labels are simply imperfect, as claimed by the competition organizers. Some birds might not be labeled in both training and test data. This can worsen the previous domain shift problem because it makes validation data less trustworthy.</p>
+<p>3 Training takes forever. Inference takes forever. Inference of two models on Kaggle just took me 4 hours!! So you certainly cannot rely on Kaggle&rsquo;s machine to compete at all, which I think brings unfairness because some  well-estabilished dude, either in turns of career or finance, simply got more resource to test more methods, and those are people less in need of a medal.<br>
+Like other deep learning problem, the task is a super dynamic one with infinite potential ways to try. So many hyperparameters do matter: learning rate, scheduler parameters, model size, model type, augmentations (a lot of them), loss function, audio cropping&hellip;Uhhh, I&rsquo;m only able to train/infer one setting each day so&hellip;\</p>
+<p>Anyway, these are the main problems I am thinking about, almost every moment right now. How to solve them?</p>
+<h2 id="whats-the-solution">What&rsquo;s the solution?</h2>
+<h3 id="models">models</h3>
+<p>My focus, up to this point, is on a CNN model called EfficientNet. This started with blind idea copying because EfficientNet seemed to be the most popular backbone architechture on Kaggle. Still, it&rsquo;s popular for a reason. Here is a quick recap of its core concepts:</p>
+<ul>
+<li>To scale a CNN, you have primarily three hyperparameters to adjust: network depth, width (n_filters), and input resolution.</li>
+<li>But adjusting randomly can be wasteful. E.g. too many filters can contain useless ones.</li>
+<li>There is correlation between the effectiveness of upscaling the parameters. Therefore, there is an equilibrium: the point at which three parameters combine to form the model that are both powerful and efficient.</li>
+<li>EfficientNet is created by doing a (very expensive) grid search to optimize and find the equilibrium.</li>
+<li>The basic building block is MBConv, a small cnn block with skip connection and 1x1 conv.</li>
+<li>The paper shows that EfficientNet performs better on various tasks than the much larger ResNet.</li>
+</ul>
+</div>
+    
+    <button class="floating-button">
+    <a class="floating-button__link" href="">
+        <span>back</span>
+    </a>
+</button>
+
+  </article>
+  
+    </div>
+    
+    
+        
+<script src="/js/script.js"></script>
+
+      
+  </body>
+</html>

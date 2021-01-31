@@ -1,14 +1,23 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>ai on blog to self-introduce, rat race, get a skin-in-the-game in wording, etc.</title>
+    <title>ai on blog to self-introduce</title>
     <link>/tags/ai/</link>
-    <description>Recent content in ai on blog to self-introduce, rat race, get a skin-in-the-game in wording, etc.</description>
+    <description>Recent content in ai on blog to self-introduce</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 18 Jan 2021 00:00:00 +0000</lastBuildDate><atom:link href="/tags/ai/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 29 Jan 2021 00:00:00 +0000</lastBuildDate><atom:link href="/tags/ai/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>sound event detection: what and how</title>
+      <title>sound event detection #2: kaggle is real</title>
+      <link>/posts/sed2/</link>
+      <pubDate>Fri, 29 Jan 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/sed2/</guid>
+      <description>Sound event detection #2: Kaggle is REAL It&amp;rsquo;s funny seeing myself complaining about how long (an afternoon) it took to research SED before entering the competition. Because in the past 10 days, I spent 70% (to say the least) of all sitting time on the competition, reading, familiarizing, coding, training, inferring, failing. It&amp;rsquo;s addictive and people here are competitive and SERIOUS about the competition. And yet I still could not match the public baseline with 20 days to go (the public score now is 0.</description>
+    </item>
+    
+    <item>
+      <title>sound event detection #1: what and how</title>
       <link>/posts/sed1/</link>
       <pubDate>Mon, 18 Jan 2021 00:00:00 +0000</pubDate>
       
@@ -25,7 +34,8 @@ Like most problems, SED relies on labeling, or the start/end time locations. A c
       
       <guid>/posts/cc1/</guid>
       <description>Creative coding: 1st attempt layout:
- creative coding and javascript generative learning  Creative coding and js Generative learning Generative arts, creative coding, generative coding.. These all fo some reason hint on the use of machine learning/deep learning. Actually they share one similarity. They are both, to some extent, abstract/mysterious/unexplainable. Arts are like neural networks, functions where inputs are images and outputs are, say, levels of satisfaction of viewers. It&amp;rsquo;s hard to tell what triggers different outputs, which is a digression to the ancient brain vs nn problem</description>
+ creative coding and javascript generative learning  Creative coding and js The other day I came across this blog post by Professor Zach Lieberman, summarizing his journey creating one coding sketch everyday in 2017.
+Generative learning Generative arts, creative coding, generative coding.. These all fo some reason hint on the use of machine learning/deep learning. Actually they share one similarity. They are both, to some extent, abstract/mysterious/unexplainable.</description>
     </item>
     
     <item>

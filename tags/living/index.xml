@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>living on blog to self-introduce, rat race, get a skin-in-the-game in wording, etc.</title>
+    <title>living on blog to self-introduce</title>
     <link>/tags/living/</link>
-    <description>Recent content in living on blog to self-introduce, rat race, get a skin-in-the-game in wording, etc.</description>
+    <description>Recent content in living on blog to self-introduce</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <lastBuildDate>Tue, 15 Dec 2020 00:00:00 +0000</lastBuildDate><atom:link href="/tags/living/index.xml" rel="self" type="application/rss+xml" />
@@ -13,7 +13,8 @@
       <pubDate>Tue, 15 Dec 2020 00:00:00 +0000</pubDate>
       
       <guid>/posts/lex1/</guid>
-      <description></description>
+      <description>These are some notes on Lex&amp;rsquo;s podcast.
+I find it&amp;rsquo;s quite difficult to talk about the subject of the meaning of life because no one truly understand the mystery of life and this is a rare situation where the difference in knowledge between audience and talker is narrow. At a result, to those philosophical and vague hypothesis/questions without substantial answers, often the listener&amp;rsquo;s reaction is like &amp;ldquo;but &amp;rsquo;ve also thought about before (I&amp;rsquo;m here for an answer)&amp;rdquo;.</description>
     </item>
     
   </channel>
