@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <title>blog to self-introduce</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="description" content="VAE review that is quick" />
+
+    <meta property="og:title" content="VAE: reasoning process" />
+    <meta property="og:description" content="VAE review that is quick" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="/posts/vae/" />
+    <meta itemprop="name" content="VAE: reasoning process">
+    <meta itemprop="description" content="VAE review that is quick">
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="VAE: reasoning process"/>
+    <meta name="twitter:description" content="VAE review that is quick"/>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+
+    
+    <link rel="stylesheet" href="/scss/style.min.436642b633ad0a0dc4a7a99ade60a2b76a56102682aeadc369780247dd463588.css" >
+</head>
+<body>
+    <header>
+    <div class="header poster-header-frame">
+        
+        
+        
+</header>
+
+
+
+    <div id="content">
+  <article class="post">
+    
+    
+      <button class="floating-button">
+    <a class="floating-button__link" href="">
+        <span>back</span>
+    </a>
+</button>
+
+      <div class="post-content"><p>No math, just bullet points! to stopped being constantly bothered by theories behind VAE.</p>
+<p>Start with GMM: each z corresponds to a cluster.</p>
+<p>Optimizing log probability of GMM: won’t work because you have to sample the unique z that correspond to an x. Otherwise the other sampled p(x|z) are virtually zero (so no gradients).</p>
+<p>Distributed representation: an important catch: e.g. binary features result in 2^n, rather than n, clusters.</p>
+<p>Thus, the chance of sampling a useful z is 1/(2^n). Almost zero at high dimension.</p>
+<p>What if z is continuous sampled from Gaussan:</p>
+<p>Or maybe p(z), or pZ(z) as confusingly called in a lot of places, is non-gaussian and hard to sample. WE DON”T KNOW!</p>
+<p>How to solve? Important sampling!!</p>
+<p>Important sampling: remember? just add the q(z)/q(z) term! Now can sample from q.</p>
+<p>We have to choose a good q. We want it to be dependent on x, not sampling same for all values of x.</p>
+<p>But again, no exact solution available for q. Optimize KL( q || p )!!</p>
+<p>What do we get? Some optimization objective with logqz, logpz, and logp(x|z)</p>
+<p>Assume: logqz and logpz are gaussian. logp(x|z) a neural network</p>
+<p>A reminder: we are trying to minimize KL to get q! And this is for q to be able to sample useful z</p>
+<p>Amortized inference: You can maybe ignore this, not super important to differentiate. So far the formulation was targeting individual x, meaning that I should have written x as xi. Amortized means to modify the KL objective by adding a summation in the front to optimize many x simultaneously.</p>
+<p>Amortized continue: also use another neural network to calculate mean and variance of q. Amortized is faster (doesn’’t predict from scratch for each new xi) but not as precise.</p>
+<p>Why not as precise: two appx made: 1. q as gaussian. 2. For all x, q uses the same parametrization (same nn for mean and var)</p>
+<p>That is pretty much it. Still there are some (quite mathy) details on training methods, so that all the above become officially VAE</p>
+<p>Specifically, there are two training methods to choose from: <strong>1. Likelihood ratio gradient and 2. Pathwise Derivative or parameterization trick</strong></p>
+<p>How?:</p>
+<ol>
+<li>
+<p>calculate z, and optimize log directly (if its far from x, then not useful. Need many z to form a good estimate and High variance)</p>
+</li>
+<li>
+<p>calculate z by estimating mean and variance (called reparameterization trick). Works only for continuous z. Low variance</p>
+</li>
+</ol>
+<p>This explanation is extracted from cs294 by Abbeel, which was a lot of math. An interesting point made by Abbeel was that reparameterization trick, instead of a normal distribution, could be done by a FLOW model!</p>
+<p><strong>What about Levine&rsquo;s explanation?</strong></p>
+<p>He made the helpful claim that method 1 is actually Policy gradient. Reward function r is some logs that do not depend on phi which parameterizes q (remember, no math here, so only vague description)</p>
+<p>Method 1, or policy gradient, does not calculate the derivative of r (for mentioned independence on phi) but instead samples a lot of z from q</p>
+<p>Method 2, the reparameterization trick, allows you to calculate the derivative of r directly, therefore the smaller vairance.</p>
+<p>Okay let&rsquo;s take a step back and look at the big picture, the core idea of vae:</p>
+<p><strong>Having a simple distribution over z and a simple distribution over x given z, you can get very complex distribution over x.</strong></p>
+<p>Hope this can save myself time in the future googling and youtubing <em>VAE explained.</em></p>
+</div>
+    
+    <button class="floating-button">
+    <a class="floating-button__link" href="">
+        <span>back</span>
+    </a>
+</button>
+
+  </article>
+  
+    </div>
+    
+    
+        
+<script src="/js/script.js"></script>
+
+      
+  </body>
+</html>
